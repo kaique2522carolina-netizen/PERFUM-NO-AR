@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfume no Ar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e8e8e8;
+    --gray-300: #d0d0d0;
+    --gray-400: #a0a0a0;
+    --gray-500: #6b6b6b;
+    --gray-600: #4a4a4a;
+    --red: #c0392b;
+    --red-light: #fdf2f1;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --green-dark: #14532d;
+    --green-dark-bg: #dcfce7;
+    --pending-red: #dc2626;
+    --pending-bg: #fef2f2;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ============================================================
+     HEADER
+  ============================================================ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.95);
+  }
+
+  .site-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--black);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: opacity var(--transition);
+    position: relative;
+  }
+
+  .site-logo:active { opacity: 0.75; }
+
+  .logo-progress {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--black);
+    border-radius: 2px;
+    transition: none;
+    pointer-events: none;
+  }
+
+  .header-tagline {
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  /* ============================================================
+     PAGE LAYOUT
+  ============================================================ */
+  .page { display: none; animation: fadein 0.35s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================================================
+     CLIENT FORM PAGE
+  ============================================================ */
+  .form-page {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .form-page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+
+  .form-page-subtitle {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: var(--gray-500);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .form-section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 18px;
+    margin-top: 32px;
+  }
+
+  .form-section-label:first-of-type { margin-top: 0; }
+
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--black);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--black);
+    box-shadow: 0 0 0 3px rgba(10,10,10,0.06);
+  }
+
+  .form-input.error {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.07);
+  }
+
+  .form-input:disabled {
+    background: var(--gray-100);
+    color: var(--gray-400);
+    cursor: not-allowed;
+  }
+
+  .form-input::placeholder { color: var(--gray-300); }
+
+  .field-error {
+    display: none;
+    font-size: 0.76rem;
+    color: var(--red);
+    margin-top: 5px;
+    font-weight: 400;
+  }
+
+  .field-error.visible { display: block; }
+
+  .cep-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .address-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .cep-status {
+    font-size: 0.76rem;
+    margin-top: 5px;
+    font-weight: 400;
+    display: none;
+  }
+
+  .cep-status.loading { display: block; color: var(--gray-400); }
+  .cep-status.error   { display: block; color: var(--red); }
+  .cep-status.success { display: block; color: var(--green); }
+
+  .submit-btn {
+    width: 100%;
+    height: 52px;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), opacity var(--transition);
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:not(:disabled):hover { background: var(--gray-600); }
+  .submit-btn:not(:disabled):active { transform: scale(0.99); }
+
+  .submit-btn:disabled {
+    background: var(--gray-200);
+    color: var(--gray-400);
+    cursor: not-allowed;
+  }
+
+  .submit-btn .btn-spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+
+  .submit-btn.loading .btn-text { display: none; }
+  .submit-btn.loading .btn-spinner { display: block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .success-banner {
+    display: none;
+    background: var(--green-light);
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    margin-top: 20px;
+    font-size: 0.875rem;
+    color: var(--green);
+    font-weight: 500;
+    text-align: center;
+    animation: fadein 0.3s ease;
+  }
+
+  .success-banner.visible { display: block; }
+
+  /* ============================================================
+     LOGIN MODAL
+  ============================================================ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.visible {
+    display: flex;
+    animation: fadein 0.2s ease;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--gray-100);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition);
+    font-size: 1rem;
+    color: var(--gray-600);
+  }
+
+  .modal-close:hover { background: var(--gray-200); }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .modal-subtitle {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .login-error {
+    display: none;
+    font-size: 0.78rem;
+    color: var(--red);
+    background: var(--red-light);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .login-error.visible { display: block; }
+
+  /* ============================================================
+     ADMIN DASHBOARD
+  ============================================================ */
+  .admin-page {
+    min-height: calc(100vh - 64px);
+    background: var(--gray-100);
+    padding: 32px 24px 60px;
+  }
+
+  .admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .admin-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+
+  .logout-btn {
+    height: 36px;
+    padding: 0 18px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+
+  .logout-btn:hover { background: var(--gray-100); border-color: var(--gray-400); color: var(--black); }
+
+  /* COUNTERS */
+  .counters-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .counters-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 540px) {
+    .counters-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .counter-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+  }
+
+  .counter-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 6px;
+  }
+
+  .counter-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .counter-card.total .counter-value { color: var(--black); }
+  .counter-card.aguardando .counter-value { color: var(--blue); }
+  .counter-card.pendente .counter-value { color: var(--pending-red); }
+  .counter-card.emitido .counter-value { color: var(--green); }
+  .counter-card.rastreio .counter-value { color: var(--green-dark); }
+
+  /* SEARCH */
+  .search-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  @media (max-width: 640px) {
+    .search-bar { grid-template-columns: 1fr; }
+  }
+
+  .search-input {
+    height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color var(--transition);
+  }
+
+  .search-input:focus { border-color: var(--black); }
+  .search-input::placeholder { color: var(--gray-300); }
+
+  /* KANBAN COLUMNS */
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  @media (max-width: 1100px) {
+    .kanban-board { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .kanban-board { grid-template-columns: 1fr; }
+  }
+
+  .kanban-col {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .kanban-col-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kanban-col-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .kanban-col-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 100px;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  .col-aguardando .kanban-col-title { color: var(--blue); }
+  .col-aguardando .kanban-col-badge { background: var(--blue-light); color: var(--blue); }
+  .col-aguardando { border-top: 3px solid var(--blue); }
+
+  .col-pendente .kanban-col-title { color: var(--pending-red); }
+  .col-pendente .kanban-col-badge { background: var(--pending-bg); color: var(--pending-red); }
+  .col-pendente { border-top: 3px solid var(--pending-red); }
+
+  .col-emitido .kanban-col-title { color: var(--green); }
+  .col-emitido .kanban-col-badge { background: var(--green-light); color: var(--green); }
+  .col-emitido { border-top: 3px solid var(--green); }
+
+  .col-rastreio .kanban-col-title { color: var(--green-dark); }
+  .col-rastreio .kanban-col-badge { background: var(--green-dark-bg); color: var(--green-dark); }
+  .col-rastreio { border-top: 3px solid var(--green-dark); }
+
+  .kanban-col-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 120px;
+  }
+
+  .kanban-empty {
+    font-size: 0.78rem;
+    color: var(--gray-300);
+    text-align: center;
+    padding: 24px 0;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+
+  /* ORDER CARD */
+  .order-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition), transform var(--transition);
+    animation: fadein 0.3s ease;
+  }
+
+  .order-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+  .order-card-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .order-card-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .order-card-field {
+    display: flex;
+    gap: 6px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .order-card-field-label {
+    font-weight: 500;
+    color: var(--gray-500);
+    flex-shrink: 0;
+    min-width: 68px;
+  }
+
+  .order-card-field-value {
+    color: var(--gray-600);
+    word-break: break-word;
+  }
+
+  .order-card-datetime {
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    font-weight: 300;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .motivo-erro {
+    background: var(--pending-bg);
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.73rem;
+    color: var(--pending-red);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .rastreio-code {
+    background: var(--green-dark-bg);
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.73rem;
+    color: var(--green-dark);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    word-break: break-all;
+  }
+
+  .etiqueta-pending-msg {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.72rem;
+    color: var(--green);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  /* Card buttons */
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .card-btn {
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all var(--transition);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  .card-btn-primary {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  .card-btn-primary:hover { background: var(--gray-600); border-color: var(--gray-600); }
+  .card-btn-primary:disabled { background: var(--gray-300); border-color: var(--gray-300); cursor: not-allowed; }
+
+  .card-btn-secondary {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--gray-300);
+  }
+
+  .card-btn-secondary:hover { background: var(--gray-100); border-color: var(--gray-400); }
+
+  .card-btn-danger {
+    background: var(--white);
+    color: var(--red);
+    border-color: #fca5a5;
+  }
+
+  .card-btn-danger:hover { background: var(--red-light); border-color: var(--red); }
+
+  .card-btn-green {
+    background: var(--white);
+    color: var(--green);
+    border-color: #86efac;
+  }
+
+  .card-btn-green:hover { background: var(--green-light); border-color: var(--green); }
+
+  .card-btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .card-btn-spinner {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  .card-btn-primary .card-btn-spinner { border-color: rgba(255,255,255,0.3); border-top-color: #fff; }
+  .card-btn-secondary .card-btn-spinner { border-color: rgba(10,10,10,0.2); border-top-color: #333; }
+
+  /* TOAST */
+  .toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+
+  .toast {
+    background: var(--black);
+    color: var(--white);
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 400;
+    box-shadow: var(--shadow-lg);
+    animation: toastIn 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+    max-width: 300px;
+    pointer-events: auto;
+  }
+
+  .toast.success { background: var(--green); }
+  .toast.error   { background: var(--red); }
+  .toast.info    { background: var(--blue); }
+
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes toastOut {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(12px) scale(0.96); }
+  }
+
+  /* PRINT A6 */
+  @media print {
+    @page {
+      size: 105mm 148mm;
+      margin: 5mm;
+    }
+
+    body * { visibility: hidden !important; }
+    #print-area, #print-area * { visibility: visible !important; }
+
+    #print-area {
+      position: fixed;
+      top: 0; left: 0;
+      width: 105mm;
+      height: 148mm;
+      background: white;
+    }
+  }
+
+  #print-area { display: none; }
+
+  /* ============================================================
+     RESPONSIVE
+  ============================================================ */
+  @media (max-width: 480px) {
+    .site-header { padding: 0 16px; }
+    .form-page { padding: 32px 16px 64px; }
+    .admin-page { padding: 20px 14px 48px; }
+    .cep-row { grid-template-columns: 1fr; }
+    .address-row { grid-template-columns: 1fr; }
+    .modal { padding: 32px 24px; }
+  }
+
+  /* Thin scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <span class="site-logo" id="logoHoldTarget">Perfume no Ar<span class="logo-progress" id="logoProgress"></span></span>
+  <span class="header-tagline">Logistica & Envios</span>
+</header>
+
+<!-- PAGES -->
+
+<!-- CLIENT FORM PAGE -->
+<div class="page active" id="clientPage">
+  <div class="form-page">
+    <h1 class="form-page-title">Finalizar pedido</h1>
+    <p class="form-page-subtitle">Preencha seus dados para receber seu pedido com seguranca e agilidade.</p>
+
+    <form id="clientForm" novalidate autocomplete="off">
+
+      <div class="form-section-label">Dados pessoais</div>
+
+      <div class="form-group">
+        <label class="form-label" for="nome">Nome completo</label>
+        <input class="form-input" id="nome" type="text" placeholder="Nome e sobrenome" autocomplete="name">
+        <span class="field-error" id="nomeError">Informe nome e sobrenome.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="cpf">CPF</label>
+        <input class="form-input" id="cpf" type="text" placeholder="000.000.000-00" inputmode="numeric" maxlength="14">
+        <span class="field-error" id="cpfError">CPF invalido.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="telefone">Telefone</label>
+        <input class="form-input" id="telefone" type="text" placeholder="(00) 00000-0000" inputmode="numeric" maxlength="15">
+        <span class="field-error" id="telefoneError">Informe um telefone valido.</span>
+      </div>
+
+      <div class="form-section-label">Endereco de entrega</div>
+
+      <div class="form-group">
+        <label class="form-label" for="cep">CEP</label>
+        <input class="form-input" id="cep" type="text" placeholder="00000-000" inputmode="numeric" maxlength="9">
+        <span class="cep-status" id="cepStatus"></span>
+        <span class="field-error" id="cepError">CEP invalido.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="rua">Rua</label>
+        <input class="form-input" id="rua" type="text" placeholder="Nome da rua">
+        <span class="field-error" id="ruaError">Informe a rua.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bairro">Bairro</label>
+        <input class="form-input" id="bairro" type="text" placeholder="Nome do bairro">
+        <span class="field-error" id="bairroError">Informe o bairro.</span>
+      </div>
+
+      <div class="address-row">
+        <div class="form-group">
+          <label class="form-label" for="cidade">Cidade</label>
+          <input class="form-input" id="cidade" type="text" placeholder="Cidade" disabled>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="estado">Estado</label>
+          <input class="form-input" id="estado" type="text" placeholder="UF" disabled>
+        </div>
+      </div>
+
+      <div class="cep-row">
+        <div class="form-group">
+          <label class="form-label" for="numero">Numero</label>
+          <input class="form-input" id="numero" type="text" placeholder="123" inputmode="text">
+          <span class="field-error" id="numeroError">Informe o numero.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="complemento">Complemento</label>
+          <input class="form-input" id="complemento" type="text" placeholder="Apto, bloco...">
+          <span class="field-error" id="complementoError">Informe o complemento.</span>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>
+        <span class="btn-text">Confirmar pedido</span>
+        <div class="btn-spinner"></div>
+      </button>
+    </form>
+
+    <div class="success-banner" id="successBanner">Pedido enviado com sucesso! Assim que sua etiqueta for emitida, entraremos em contato.</div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="adminPage">
+  <div class="admin-page">
+    <div class="admin-topbar">
+      <h2 class="admin-title">Painel Administrativo</h2>
+      <button class="logout-btn" id="logoutBtn">Sair</button>
+    </div>
+
+    <!-- Counters -->
+    <div class="counters-grid">
+      <div class="counter-card total">
+        <div class="counter-label">Total</div>
+        <div class="counter-value" id="cntTotal">0</div>
+      </div>
+      <div class="counter-card aguardando">
+        <div class="counter-label">Aguardando</div>
+        <div class="counter-value" id="cntAguardando">0</div>
+      </div>
+      <div class="counter-card pendente">
+        <div class="counter-label">Pendente</div>
+        <div class="counter-value" id="cntPendente">0</div>
+      </div>
+      <div class="counter-card emitido">
+        <div class="counter-label">Emitido</div>
+        <div class="counter-value" id="cntEmitido">0</div>
+      </div>
+      <div class="counter-card rastreio">
+        <div class="counter-label">Rastreio</div>
+        <div class="counter-value" id="cntRastreio">0</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <input class="search-input" id="searchNome" type="text" placeholder="Pesquisar por nome...">
+      <input class="search-input" id="searchCpf" type="text" placeholder="Pesquisar por CPF...">
+      <input class="search-input" id="searchCep" type="text" placeholder="Pesquisar por CEP...">
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-board">
+      <div class="kanban-col col-aguardando">
+        <div class="kanban-col-header">
+          <span class="kanban-col-title">Aguardando</span>
+          <span class="kanban-col-badge" id="badgeAguardando">0</span>
+        </div>
+        <div class="kanban-col-body" id="colAguardando">
+          <div class="kanban-empty">Nenhum pedido</div>
+        </div>
+      </div>
+      <div class="kanban-col col-pendente">
+        <div class="kanban-col-header">
+          <span class="kanban-col-title">Pendente</span>
+          <span class="kanban-col-badge" id="badgePendente">0</span>
+        </div>
+        <div class="kanban-col-body" id="colPendente">
+          <div class="kanban-empty">Nenhum pedido</div>
+        </div>
+      </div>
+      <div class="kanban-col col-emitido">
+        <div class="kanban-col-header">
+          <span class="kanban-col-title">Emitido</span>
+          <span class="kanban-col-badge" id="badgeEmitido">0</span>
+        </div>
+        <div class="kanban-col-body" id="colEmitido">
+          <div class="kanban-empty">Nenhum pedido</div>
+        </div>
+      </div>
+      <div class="kanban-col col-rastreio">
+        <div class="kanban-col-header">
+          <span class="kanban-col-title">Rastreio Disponivel</span>
+          <span class="kanban-col-badge" id="badgeRastreio">0</span>
+        </div>
+        <div class="kanban-col-body" id="colRastreio">
+          <div class="kanban-empty">Nenhum pedido</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" id="loginClose">&#x2715;</button>
+    <h2 class="modal-title">Acesso restrito</h2>
+    <p class="modal-subtitle">Painel administrativo exclusivo.</p>
+
+    <div class="login-error" id="loginError">Email ou senha incorretos.</div>
+
+    <div class="form-group">
+      <label class="form-label" for="loginEmail">Email</label>
+      <input class="form-input" id="loginEmail" type="email" placeholder="email@dominio.com" autocomplete="username">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="loginPassword">Senha</label>
+      <input class="form-input" id="loginPassword" type="password" placeholder="Senha" autocomplete="current-password">
+    </div>
+
+    <button type="button" class="submit-btn" id="loginBtn">
+      <span class="btn-text">Entrar</span>
+      <div class="btn-spinner"></div>
+    </button>
+  </div>
+</div>
+
+<!-- PRINT AREA -->
+<div id="print-area"></div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot, doc,
+  updateDoc, deleteDoc, query, orderBy, serverTimestamp, Timestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ================================================================
+   FIREBASE CONFIG
+================================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDpTPzqVbDdsLqBE-TNbZcD9F_o-hDljDE",
+  authDomain: "perfume-no-ar-oficial.firebaseapp.com",
+  projectId: "perfume-no-ar-oficial",
+  storageBucket: "perfume-no-ar-oficial.firebasestorage.app",
+  messagingSenderId: "20139611612",
+  appId: "1:20139611612:web:9c20792157464284262b19"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ================================================================
+   CREDENTIALS
+================================================================ */
+const ADMIN_EMAIL    = "hotprintilogistica@gmail.com";
+const ADMIN_PASSWORD = "25221104Ck";
+
+// Token movido para variável de ambiente SUPERFRETE_TOKEN na Netlify.
+// Não é necessário no frontend — a Netlify Function cuida da autenticação.
+const SUPERFRETE_TOKEN = ""; // mantido apenas para não quebrar referências legadas
+
+/* ================================================================
+   SENDER DATA (fixed)
+================================================================ */
+const SENDER = {
+  name:  "Comercio Frete",
+  email: "hotprintilogistica@gmail.com",
+  phone: "11981019899",
+  cpf:   "50279382847",
+  cep:   "08150000",
+  number:     "1458",
+  complement: "Galpao"
+};
+
+/* ================================================================
+   PACKAGE DATA (fixed)
+================================================================ */
+const PKG = {
+  weight: 0.3,
+  height: 10,
+  width:  20,
+  length: 40
+};
+
+/* ================================================================
+   STATE
+================================================================ */
+let allOrders  = [];
+let isLoggedIn = false;
+let unsubscribe = null;
+
+/* ================================================================
+   TOAST
+================================================================ */
+function showToast(msg, type = "default", duration = 3500) {
+  const container = document.getElementById("toastContainer");
+  const el = document.createElement("div");
+  el.className = "toast " + type;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.animation = "toastOut 0.3s cubic-bezier(0.4,0,0.2,1) forwards";
+    el.addEventListener("animationend", () => el.remove());
+  }, duration);
+}
+
+/* ================================================================
+   LOGO HOLD (10s) → open login
+================================================================ */
+const HOLD_DURATION = 10000;
+let logoHoldTimer   = null;
+let logoHoldStart   = null;
+let logoHoldRaf     = null;
+let logoHoldActive  = false;
+
+const logoEl       = document.getElementById("logoHoldTarget");
+const logoProgress = document.getElementById("logoProgress");
+
+function startHold(e) {
+  // Avoid double-firing on devices that emit both touch and mouse events
+  if (logoHoldActive) return;
+  logoHoldActive = true;
+  logoHoldStart  = Date.now();
+
+  // Animate progress bar
+  function animateProgress() {
+    const elapsed = Date.now() - logoHoldStart;
+    const pct     = Math.min((elapsed / HOLD_DURATION) * 100, 100);
+    logoProgress.style.width = pct + "%";
+    if (pct < 100 && logoHoldActive) {
+      logoHoldRaf = requestAnimationFrame(animateProgress);
+    }
+  }
+  logoHoldRaf = requestAnimationFrame(animateProgress);
+
+  logoHoldTimer = setTimeout(() => {
+    cancelHold(false); // stop animation but don't clear the action
+    if (!isLoggedIn) openLoginModal();
+    else showAdminPage();
+  }, HOLD_DURATION);
+}
+
+function cancelHold(resetProgress = true) {
+  logoHoldActive = false;
+  if (logoHoldTimer)  { clearTimeout(logoHoldTimer); logoHoldTimer = null; }
+  if (logoHoldRaf)    { cancelAnimationFrame(logoHoldRaf); logoHoldRaf = null; }
+  if (resetProgress)  { logoProgress.style.width = "0%"; }
+}
+
+logoEl.addEventListener("mousedown",   startHold);
+logoEl.addEventListener("touchstart",  startHold, { passive: true });
+logoEl.addEventListener("mouseup",     () => cancelHold(true));
+logoEl.addEventListener("touchend",    () => cancelHold(true));
+logoEl.addEventListener("touchcancel", () => cancelHold(true));
+// NOTE: mouseleave intentionally removed — it caused premature cancellation on desktop
+
+/* ================================================================
+   LOGIN MODAL
+================================================================ */
+function openLoginModal() {
+  document.getElementById("loginModal").classList.add("visible");
+  document.getElementById("loginEmail").value    = "";
+  document.getElementById("loginPassword").value = "";
+  document.getElementById("loginError").classList.remove("visible");
+  document.getElementById("loginEmail").focus();
+}
+
+function closeLoginModal() {
+  document.getElementById("loginModal").classList.remove("visible");
+}
+
+document.getElementById("loginClose").addEventListener("click", closeLoginModal);
+
+document.getElementById("loginModal").addEventListener("click", function(e) {
+  if (e.target === this) closeLoginModal();
+});
+
+document.getElementById("loginPassword").addEventListener("keydown", e => {
+  if (e.key === "Enter") doLogin();
+});
+
+document.getElementById("loginBtn").addEventListener("click", doLogin);
+
+async function doLogin() {
+  const email    = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  const btn      = document.getElementById("loginBtn");
+  const errEl    = document.getElementById("loginError");
+
+  errEl.classList.remove("visible");
+
+  if (!email || !password) {
+    errEl.textContent = "Preencha todos os campos.";
+    errEl.classList.add("visible");
+    return;
+  }
+
+  btn.classList.add("loading");
+
+  await new Promise(r => setTimeout(r, 600));
+
+  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    isLoggedIn = true;
+    closeLoginModal();
+    showAdminPage();
+  } else {
+    errEl.textContent = "Email ou senha incorretos.";
+    errEl.classList.add("visible");
+    btn.classList.remove("loading");
+  }
+}
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  isLoggedIn = false;
+  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+  showPage("clientPage");
+  showToast("Sessao encerrada.", "default");
+});
+
+/* ================================================================
+   PAGE SWITCH
+================================================================ */
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+}
+
+function showAdminPage() {
+  showPage("adminPage");
+  listenOrders();
+}
+
+/* ================================================================
+   FORM MASKS & VALIDATION
+================================================================ */
+const $ = id => document.getElementById(id);
+
+// CPF mask
+$("cpf").addEventListener("input", function() {
+  let v = this.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{0,3})/, "$1.$2.$3");
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{0,3})/, "$1.$2");
+  this.value = v;
+  validateField("cpf");
+  checkFormValid();
+});
+
+// Phone mask
+$("telefone").addEventListener("input", function() {
+  let v = this.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+  else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+  else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+  else if (v.length > 0) v = "(" + v;
+  this.value = v;
+  validateField("telefone");
+  checkFormValid();
+});
+
+// CEP mask
+$("cep").addEventListener("input", function() {
+  let v = this.value.replace(/\D/g, "").slice(0, 8);
+  if (v.length > 5) v = v.replace(/(\d{5})(\d{0,3})/, "$1-$2");
+  this.value = v;
+  if (v.replace(/\D/g,"").length === 8) fetchCep(v.replace(/\D/g,""));
+  validateField("cep");
+  checkFormValid();
+});
+
+// Name
+$("nome").addEventListener("input", () => { validateField("nome"); checkFormValid(); });
+$("rua").addEventListener("input",  () => { validateField("rua");  checkFormValid(); });
+$("bairro").addEventListener("input",() => { validateField("bairro"); checkFormValid(); });
+$("numero").addEventListener("input",()  => { validateField("numero"); checkFormValid(); });
+$("complemento").addEventListener("input", () => { validateField("complemento"); checkFormValid(); });
+
+function validateField(field) {
+  const val = $(field).value.trim();
+  let ok = true;
+
+  if (field === "nome") {
+    const parts = val.trim().split(/\s+/);
+    ok = parts.length >= 2 && parts.every(p => p.length >= 1);
+    setError("nome", "nomeError", !ok);
+  } else if (field === "cpf") {
+    ok = validarCPF(val);
+    setError("cpf", "cpfError", !ok);
+  } else if (field === "telefone") {
+    const digits = val.replace(/\D/g, "");
+    ok = digits.length >= 10;
+    setError("telefone", "telefoneError", !ok);
+  } else if (field === "cep") {
+    const digits = val.replace(/\D/g,"");
+    ok = digits.length === 8;
+    setError("cep", "cepError", !ok);
+  } else if (field === "rua") {
+    ok = val.length > 0;
+    setError("rua", "ruaError", !ok);
+  } else if (field === "bairro") {
+    ok = val.length > 0;
+    setError("bairro", "bairroError", !ok);
+  } else if (field === "numero") {
+    ok = val.length > 0;
+    setError("numero", "numeroError", !ok);
+  } else if (field === "complemento") {
+    ok = val.length > 0;
+    setError("complemento", "complementoError", !ok);
+  }
+  return ok;
+}
+
+function setError(fieldId, errorId, hasError) {
+  const inp = $(fieldId);
+  const err = $(errorId);
+  if (hasError) {
+    inp.classList.add("error");
+    err.classList.add("visible");
+  } else {
+    inp.classList.remove("error");
+    err.classList.remove("visible");
+  }
+}
+
+function checkFormValid() {
+  const fields = ["nome","cpf","telefone","cep","rua","bairro","numero","complemento"];
+  const allOk  = fields.every(f => {
+    const v = $(f).value.trim();
+    if (!v) return false;
+    if (f === "nome")     { const p = v.split(/\s+/); return p.length >= 2; }
+    if (f === "cpf")      { return validarCPF(v); }
+    if (f === "telefone") { return v.replace(/\D/g,"").length >= 10; }
+    if (f === "cep")      { return v.replace(/\D/g,"").length === 8; }
+    return true;
+  });
+  $("submitBtn").disabled = !allOk;
+}
+
+function validarCPF(cpf) {
+  const c = cpf.replace(/\D/g,"");
+  if (c.length !== 11) return false;
+  if (/^(\d)\1+$/.test(c)) return false;
+  let s = 0;
+  for (let i = 0; i < 9; i++) s += parseInt(c[i]) * (10 - i);
+  let r = (s * 10) % 11;
+  if (r >= 10) r = 0;
+  if (r !== parseInt(c[9])) return false;
+  s = 0;
+  for (let i = 0; i < 10; i++) s += parseInt(c[i]) * (11 - i);
+  r = (s * 10) % 11;
+  if (r >= 10) r = 0;
+  return r === parseInt(c[10]);
+}
+
+/* ================================================================
+   VIA CEP
+================================================================ */
+let lastCepFetched = "";
+
+async function fetchCep(cep) {
+  if (cep === lastCepFetched) return;
+  lastCepFetched = cep;
+
+  const status = $("cepStatus");
+  status.className = "cep-status loading";
+  status.textContent = "Buscando endereco...";
+
+  $("rua").disabled   = true;
+  $("bairro").disabled= true;
+
+  try {
+    const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await res.json();
+
+    if (data.erro) {
+      status.className = "cep-status error";
+      status.textContent = "CEP nao encontrado. Preencha o endereco manualmente.";
+      $("rua").disabled    = false;
+      $("bairro").disabled = false;
+      $("rua").value     = "";
+      $("bairro").value  = "";
+      $("cidade").value  = "";
+      $("estado").value  = "";
+    } else {
+      $("rua").value    = data.logradouro || "";
+      $("bairro").value = data.bairro     || "";
+      $("cidade").value = data.localidade || "";
+      $("estado").value = data.uf         || "";
+
+      if (!data.logradouro) $("rua").disabled = false;
+      else                  $("rua").disabled = false;
+
+      if (!data.bairro) $("bairro").disabled = false;
+      else              $("bairro").disabled = false;
+
+      status.className = "cep-status success";
+      status.textContent = data.localidade + ", " + data.uf;
+
+      validateField("rua");
+      validateField("bairro");
+      checkFormValid();
+    }
+  } catch {
+    status.className = "cep-status error";
+    status.textContent = "Erro ao buscar CEP. Preencha manualmente.";
+    $("rua").disabled    = false;
+    $("bairro").disabled = false;
+  }
+}
+
+/* ================================================================
+   SUBMIT CLIENT FORM
+================================================================ */
+$("clientForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const fields = ["nome","cpf","telefone","cep","rua","bairro","numero","complemento"];
+  let allOk = true;
+  fields.forEach(f => { if (!validateField(f)) allOk = false; });
+  if (!allOk) return;
+
+  const btn = $("submitBtn");
+  btn.classList.add("loading");
+  btn.disabled = true;
+
+  const now = new Date();
+
+  try {
+    await addDoc(collection(db, "pedidos"), {
+      nome:        $("nome").value.trim(),
+      cpf:         $("cpf").value.trim(),
+      telefone:    $("telefone").value.trim(),
+      cep:         $("cep").value.trim(),
+      rua:         $("rua").value.trim(),
+      bairro:      $("bairro").value.trim(),
+      cidade:      $("cidade").value.trim(),
+      estado:      $("estado").value.trim(),
+      numero:      $("numero").value.trim(),
+      complemento: $("complemento").value.trim(),
+      status:      "aguardando",
+      motivoErro:       "",
+      codigoRastreio:   "",
+      pdfEtiqueta:      "",
+      dataCriacao:      serverTimestamp()
+    });
+
+    btn.classList.remove("loading");
+    $("clientForm").reset();
+    lastCepFetched = "";
+    $("cepStatus").className = "cep-status";
+    $("cepStatus").textContent = "";
+    $("rua").disabled   = false;
+    $("bairro").disabled= false;
+    $("cidade").value   = "";
+    $("estado").value   = "";
+    $("successBanner").classList.add("visible");
+    setTimeout(() => $("successBanner").classList.remove("visible"), 6000);
+  } catch(err) {
+    showToast("Erro ao salvar pedido. Tente novamente.", "error");
+    btn.classList.remove("loading");
+    btn.disabled = false;
+  }
+});
+
+/* ================================================================
+   FIRESTORE LISTENER
+================================================================ */
+function listenOrders() {
+  if (unsubscribe) return;
+  const q = query(collection(db, "pedidos"), orderBy("dataCriacao", "asc"));
+  unsubscribe = onSnapshot(q, snapshot => {
+    allOrders = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderBoard();
+  });
+}
+
+/* ================================================================
+   SEARCH
+================================================================ */
+$("searchNome").addEventListener("input", renderBoard);
+$("searchCpf").addEventListener("input",  renderBoard);
+$("searchCep").addEventListener("input",  renderBoard);
+
+function filteredOrders() {
+  const sNome = $("searchNome").value.trim().toLowerCase();
+  const sCpf  = $("searchCpf").value.trim().replace(/\D/g,"");
+  const sCep  = $("searchCep").value.trim().replace(/\D/g,"");
+
+  return allOrders.filter(o => {
+    if (sNome && !o.nome.toLowerCase().includes(sNome)) return false;
+    if (sCpf  && !o.cpf.replace(/\D/g,"").includes(sCpf)) return false;
+    if (sCep  && !o.cep.replace(/\D/g,"").includes(sCep)) return false;
+    return true;
+  });
+}
+
+/* ================================================================
+   RENDER BOARD
+================================================================ */
+function renderBoard() {
+  const orders = filteredOrders();
+  const cols = {
+    aguardando: [],
+    pendente:   [],
+    emitido:    [],
+    "rastreio disponivel": []
+  };
+
+  orders.forEach(o => {
+    const s = (o.status || "aguardando").toLowerCase();
+    if      (s === "aguardando")           cols.aguardando.push(o);
+    else if (s === "pendente")             cols.pendente.push(o);
+    else if (s === "emitido")              cols.emitido.push(o);
+    else if (s === "rastreio disponivel")  cols["rastreio disponivel"].push(o);
+  });
+
+  // Counters
+  $("cntTotal").textContent      = allOrders.length;
+  $("cntAguardando").textContent = allOrders.filter(o => (o.status||"aguardando").toLowerCase() === "aguardando").length;
+  $("cntPendente").textContent   = allOrders.filter(o => (o.status||"").toLowerCase() === "pendente").length;
+  $("cntEmitido").textContent    = allOrders.filter(o => (o.status||"").toLowerCase() === "emitido").length;
+  $("cntRastreio").textContent   = allOrders.filter(o => (o.status||"").toLowerCase() === "rastreio disponivel").length;
+
+  $("badgeAguardando").textContent = cols.aguardando.length;
+  $("badgePendente").textContent   = cols.pendente.length;
+  $("badgeEmitido").textContent    = cols.emitido.length;
+  $("badgeRastreio").textContent   = cols["rastreio disponivel"].length;
+
+  renderCol("colAguardando", cols.aguardando);
+  renderCol("colPendente",   cols.pendente);
+  renderCol("colEmitido",    cols.emitido);
+  renderCol("colRastreio",   cols["rastreio disponivel"]);
+}
+
+function renderCol(colId, orders) {
+  const col = $(colId);
+  if (orders.length === 0) {
+    col.innerHTML = '<div class="kanban-empty">Nenhum pedido</div>';
+    return;
+  }
+  col.innerHTML = "";
+  orders.forEach(o => col.appendChild(buildCard(o)));
+}
+
+/* ================================================================
+   BUILD ORDER CARD
+================================================================ */
+function buildCard(order) {
+  const card = document.createElement("div");
+  card.className = "order-card";
+  card.dataset.id = order.id;
+
+  const dt = order.dataCriacao
+    ? (order.dataCriacao.toDate ? order.dataCriacao.toDate() : new Date(order.dataCriacao.seconds * 1000))
+    : null;
+  const dtStr = dt ? dt.toLocaleString("pt-BR", {
+    day:"2-digit", month:"2-digit", year:"numeric",
+    hour:"2-digit", minute:"2-digit"
+  }) : "—";
+
+  const status = (order.status || "aguardando").toLowerCase();
+
+  let extraHtml = "";
+
+  if (status === "pendente" && order.motivoErro) {
+    extraHtml += `<div class="motivo-erro">Motivo: ${escHtml(order.motivoErro)}</div>`;
+  }
+
+  if (status === "emitido" && !order.codigoRastreio) {
+    extraHtml += `<div class="etiqueta-pending-msg">Etiqueta emitida. Aguardando disponibilizacao do rastreio.</div>`;
+  }
+
+  if (order.codigoRastreio) {
+    extraHtml += `<div class="rastreio-code">Rastreio: ${escHtml(order.codigoRastreio)}</div>`;
+  }
+
+  // BUTTONS
+  let btns = "";
+
+  const canGenerate = status === "aguardando" || status === "pendente";
+  const hasEtiqueta = !!order.pdfEtiqueta;
+
+  if (canGenerate) {
+    btns += `<button class="card-btn card-btn-primary" onclick="gerarEtiqueta('${order.id}', this)">Gerar Etiqueta Loggi</button>`;
+  }
+
+  if (hasEtiqueta) {
+    btns += `<button class="card-btn card-btn-secondary" onclick="visualizarEtiqueta('${order.id}')">Visualizar Etiqueta</button>`;
+    btns += `<button class="card-btn card-btn-secondary" onclick="baixarPdf('${order.id}')">Baixar PDF</button>`;
+    btns += `<button class="card-btn card-btn-secondary" onclick="imprimirA6('${order.id}')">Imprimir A6</button>`;
+    btns += `<button class="card-btn card-btn-secondary" onclick="reimprimir('${order.id}')">Reimprimir</button>`;
+  }
+
+  if (order.codigoRastreio) {
+    btns += `<button class="card-btn card-btn-green" onclick="copiarRastreio('${escHtml(order.codigoRastreio)}')">Copiar Codigo de Rastreio</button>`;
+  }
+
+  btns += `<button class="card-btn card-btn-danger" onclick="excluirPedido('${order.id}')">Excluir Pedido</button>`;
+
+  card.innerHTML = `
+    <div class="order-card-name">${escHtml(order.nome || "")}</div>
+    <div class="order-card-fields">
+      <div class="order-card-field"><span class="order-card-field-label">CPF</span><span class="order-card-field-value">${escHtml(order.cpf||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Telefone</span><span class="order-card-field-value">${escHtml(order.telefone||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">CEP</span><span class="order-card-field-value">${escHtml(order.cep||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Rua</span><span class="order-card-field-value">${escHtml(order.rua||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Bairro</span><span class="order-card-field-value">${escHtml(order.bairro||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Cidade</span><span class="order-card-field-value">${escHtml(order.cidade||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Estado</span><span class="order-card-field-value">${escHtml(order.estado||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Numero</span><span class="order-card-field-value">${escHtml(order.numero||"")}</span></div>
+      <div class="order-card-field"><span class="order-card-field-label">Complemento</span><span class="order-card-field-value">${escHtml(order.complemento||"")}</span></div>
+    </div>
+    <div class="order-card-datetime">${dtStr}</div>
+    ${extraHtml}
+    <div class="card-actions">${btns}</div>
+  `;
+
+  return card;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+/* ================================================================
+   SUPERFRETE - GERAR ETIQUETA
+================================================================ */
+window.gerarEtiqueta = async function(orderId, btnEl) {
+  const order = allOrders.find(o => o.id === orderId);
+  if (!order) return;
+
+  const origLabel = btnEl.innerHTML;
+  btnEl.disabled = true;
+  btnEl.classList.add("card-btn-loading");
+  btnEl.innerHTML = `<div class="card-btn-spinner"></div>Gerando...`;
+
+  const body = {
+    from: {
+      name:       SENDER.name,
+      email:      SENDER.email,
+      phone:      SENDER.phone,
+      document:   SENDER.cpf,
+      company_document: "",
+      state_register: "",
+      address: {
+        postal_code: SENDER.cep,
+        number:      SENDER.number,
+        complement:  SENDER.complement
+      }
+    },
+    to: {
+      name:       order.nome,
+      phone:      order.telefone.replace(/\D/g,""),
+      document:   order.cpf.replace(/\D/g,""),
+      email:      "",
+      address: {
+        postal_code: order.cep.replace(/\D/g,""),
+        street:      order.rua,
+        district:    order.bairro,
+        city:        order.cidade,
+        state_abbr:  order.estado,
+        number:      order.numero,
+        complement:  order.complemento
+      }
+    },
+    service:   "loggi",
+    products: [
+      {
+        name:     "Perfume",
+        quantity: 1,
+        unitary_value: 10.00
+      }
+    ],
+    volumes: [
+      {
+        height: PKG.height,
+        width:  PKG.width,
+        length: PKG.length,
+        weight: PKG.weight
+      }
+    ],
+    options: {
+      insurance_value: 10.00,
+      receipt:         false,
+      own_hand:        false,
+      reverse:         false,
+      non_commercial:  false,
+      platform:        "MelhorEnvio"
+    }
+  };
+
+  try {
+    // Step 1: Calculate shipping (opcional, mas incluido para robustez)
+    // Step 2: Create shipment order
+    const orderRes = await callSuperFrete("POST", "/api/v0/cart", body);
+
+    if (!orderRes || orderRes.id === undefined) {
+      throw new Error(orderRes?.message || orderRes?.error || "Resposta inesperada da API.");
+    }
+
+    const shipId = orderRes.id;
+
+    // Step 3: Pay/checkout (generate label)
+    const checkoutRes = await callSuperFrete("POST", "/api/v0/checkout", {
+      orders: [String(shipId)]
+    });
+
+    if (!checkoutRes) throw new Error("Falha no checkout.");
+
+    // Step 4: Print (get PDF)
+    const printRes = await callSuperFrete("POST", "/api/v0/shipment/print", {
+      mode:   "private",
+      orders: [String(shipId)]
+    });
+
+    const pdfUrl     = printRes?.url   || printRes?.link || "";
+    const trackCode  = orderRes?.tracking || checkoutRes?.tracking || "";
+
+    const updateData = {
+      status:     trackCode ? "rastreio disponivel" : "emitido",
+      pdfEtiqueta: pdfUrl,
+      codigoRastreio: trackCode || ""
+    };
+
+    await updateDoc(doc(db, "pedidos", orderId), updateData);
+    showToast(trackCode ? "Etiqueta emitida com rastreio disponivel!" : "Etiqueta emitida com sucesso!", "success");
+
+  } catch (err) {
+    const motivo = err.message || "Erro desconhecido.";
+    await updateDoc(doc(db, "pedidos", orderId), {
+      status:     "pendente",
+      motivoErro: motivo
+    });
+    showToast("Erro ao gerar etiqueta. Pedido movido para Pendente.", "error");
+  }
+
+  btnEl.disabled = false;
+  btnEl.classList.remove("card-btn-loading");
+  btnEl.innerHTML = origLabel;
+};
+
+async function callSuperFrete(method, endpoint, data) {
+  // Chama o proxy Netlify em vez de chamar o SuperFrete diretamente.
+  // Isso resolve o bloqueio de CORS: o browser fala com /api/superfrete/*
+  // e a Netlify Function repassa ao SuperFrete no servidor.
+  const BASE_URL = "/api/superfrete";
+  const res = await fetch(BASE_URL + endpoint, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      "Accept":       "application/json"
+      // Authorization e User-Agent são adicionados pela Netlify Function
+    },
+    body: data ? JSON.stringify(data) : undefined
+  });
+
+  let json;
+  try { json = await res.json(); } catch { json = null; }
+
+  if (!res.ok) {
+    const msg = json?.message || json?.error || `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return json;
+}
+
+/* ================================================================
+   VISUALIZAR / BAIXAR / IMPRIMIR
+================================================================ */
+window.visualizarEtiqueta = function(orderId) {
+  const order = allOrders.find(o => o.id === orderId);
+  if (!order || !order.pdfEtiqueta) { showToast("PDF nao disponivel.", "error"); return; }
+  window.open(order.pdfEtiqueta, "_blank");
+};
+
+window.baixarPdf = function(orderId) {
+  const order = allOrders.find(o => o.id === orderId);
+  if (!order || !order.pdfEtiqueta) { showToast("PDF nao disponivel.", "error"); return; }
+  const a = document.createElement("a");
+  a.href = order.pdfEtiqueta;
+  a.download = "etiqueta_" + orderId + ".pdf";
+  a.target = "_blank";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast("Download iniciado.", "success");
+};
+
+window.imprimirA6 = function(orderId) {
+  const order = allOrders.find(o => o.id === orderId);
+  if (!order || !order.pdfEtiqueta) { showToast("PDF nao disponivel.", "error"); return; }
+
+  const printArea = document.getElementById("print-area");
+  printArea.innerHTML = `<iframe src="${escHtml(order.pdfEtiqueta)}" style="width:105mm;height:148mm;border:none;"></iframe>`;
+  printArea.style.display = "block";
+
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      printArea.style.display = "none";
+      printArea.innerHTML = "";
+    }, 2000);
+  }, 500);
+};
+
+window.reimprimir = function(orderId) {
+  window.imprimirA6(orderId);
+};
+
+window.copiarRastreio = function(codigo) {
+  if (!codigo) { showToast("Codigo nao disponivel.", "error"); return; }
+  navigator.clipboard.writeText(codigo).then(() => {
+    showToast("Codigo copiado: " + codigo, "success");
+  }).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = codigo;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    showToast("Codigo copiado!", "success");
+  });
+};
+
+/* ================================================================
+   EXCLUIR PEDIDO
+================================================================ */
+window.excluirPedido = async function(orderId) {
+  if (!confirm("Deseja excluir este pedido? Esta acao nao pode ser desfeita.")) return;
+  try {
+    await deleteDoc(doc(db, "pedidos", orderId));
+    showToast("Pedido excluido.", "default");
+  } catch {
+    showToast("Erro ao excluir pedido.", "error");
+  }
+};
+
+/* ================================================================
+   INIT
+================================================================ */
+checkFormValid();
+
+</script>
+</body>
+</html>

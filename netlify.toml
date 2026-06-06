@@ -1,0 +1,11 @@
+# netlify.toml
+# Redireciona /api/superfrete/* → Netlify Function (sem expor a URL real do SuperFrete)
+
+[build]
+  publish = "."          # pasta com seu index.html
+  functions = "netlify/functions"
+
+[[redirects]]
+  from   = "/api/superfrete/*"
+  to     = "/.netlify/functions/superfrete/:splat"
+  status = 200
